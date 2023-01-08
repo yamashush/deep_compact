@@ -22,7 +22,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
-### `#deep_compact` `deep_compact!`
+### `#deep_compact` `#deep_compact!`
 
 ```ruby
 using DeepCompactor
@@ -41,7 +41,7 @@ array
 #=> ["a", ["aa"], { aa: 11 }]
 ```
 
-### `#deep_compact_blank` `deep_compact_blank!`
+### `#deep_compact_blank` `#deep_compact_blank!`
 
 ```ruby
 using DeepCompactor
