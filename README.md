@@ -1,24 +1,64 @@
+[![Gem Version](https://badge.fury.io/rb/deep_compactor.svg)](https://badge.fury.io/rb/deep_compactor)
+[![Tests](https://github.com/yamashush/deep_compactor/actions/workflows/ci.yml/badge.svg)](https://github.com/yamashush/deep_compactor/actions/workflows/ci.yml)
+
 # DeepCompactor
 
-TODO: Delete this and the text below, and describe your gem
+Add recursive compact methods for nested Array and Hash object.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/deep_compactor`. To experiment with that code, run `bin/console` for an interactive prompt.
+- `#deep_compact`
+- `#deep_compact!`
+- `#deep_compact_blank`
+- `#deep_compact_blank!`
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+    $ bundle add deep_compactor
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+    $ gem install deep_compactor
 
 ## Usage
 
-TODO: Write usage instructions here
+### `#deep_compact` `deep_compact!`
+
+```ruby
+using DeepCompactor
+
+array = ["a", nil, ["aa", nil], { aa: 11, bb: nil }]
+
+array.compact
+#=> ["a", ["aa", nil], { aa: 11, bb: nil }]
+
+array.deep_compact
+#=> ["a", ["aa"], { aa: 11 }]
+
+array.deep_compact!
+#=> ["a", ["aa"], { aa: 11 }]
+array
+#=> ["a", ["aa"], { aa: 11 }]
+```
+
+### `#deep_compact_blank` `deep_compact_blank!`
+
+```ruby
+using DeepCompactor
+
+hash = { a: 1, b: nil, c: [], d: {}, e: ["aa", nil, [], {}], f: { aa: 11, bb: nil, cc: [], dd: {} }}
+
+hash.compact_blank # required activesupport
+#=> { a: 1, e: ["aa", nil, [], {}], f: { aa: 11, bb: nil, cc: [], dd: {}}}
+
+hash.deep_compact_blank
+#=> { a: 1, e: ["aa"], f: { aa: 11 }}
+
+hash.deep_compact_blank!
+#=> { a: 1, e: ["aa"], f: { aa: 11 }}
+hash
+#=> { a: 1, e: ["aa"], f: { aa: 11 }}
+```
 
 ## Development
 
