@@ -56,11 +56,11 @@ module DeepCompactor
     # @return [Hash]
     # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-compact
     def deep_compact
-      to_h do |key, value|
+      transform_values do |value|
         if value.is_a?(Array) || value.is_a?(Hash)
-          [key, value.deep_compact]
+          value.deep_compact
         else
-          [key, value]
+          value
         end
       end.compact
     end
@@ -79,11 +79,11 @@ module DeepCompactor
 
     # @return [Hash]
     def deep_compact_blank
-      to_h do |key, value|
+      transform_values do |value|
         if value.is_a?(Array) || value.is_a?(Hash)
-          value.empty? ? [key, nil] : [key, value.deep_compact_blank]
+          value.empty? ? nil : value.deep_compact_blank
         else
-          [key, value]
+          value
         end
       end.compact
     end

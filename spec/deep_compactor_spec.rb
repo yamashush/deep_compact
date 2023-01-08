@@ -17,7 +17,9 @@ RSpec.describe DeepCompactor do
     end
 
     with_them do
-      it { should eq compacted }
+      it "source be compacted" do
+        expect(subject).to eq compacted
+      end
     end
   end
 
@@ -49,7 +51,9 @@ RSpec.describe DeepCompactor do
     end
 
     with_them do
-      it { should eq compacted }
+      it "source be compacted" do
+        expect(subject).to eq compacted
+      end
     end
   end
 
@@ -81,7 +85,9 @@ RSpec.describe DeepCompactor do
     end
 
     with_them do
-      it { should eq compacted }
+      it "source be compacted" do
+        expect(subject).to eq compacted
+      end
     end
   end
 
@@ -113,7 +119,9 @@ RSpec.describe DeepCompactor do
     end
 
     with_them do
-      it { should eq compacted }
+      it "source be compacted" do
+        expect(subject).to eq compacted
+      end
     end
   end
 
