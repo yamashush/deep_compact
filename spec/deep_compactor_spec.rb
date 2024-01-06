@@ -14,8 +14,8 @@ RSpec.describe DeepCompactor do
     using RSpec::Parameterized::TableSyntax
 
     where(:source, :compacted) do
-      ["a", nil, [], ["aa", "bb", nil, []]] | ["a", [], ["aa", "bb", []]]
-      ["a", "b", [], %w[aa bb cc dd]]       | ref(:source)
+      ["a", nil, [], ["aa", nil, []]] | ["a", [], ["aa", []]]
+      ["a", "b", [], %w[aa bb cc]]    | ref(:source)
     end
 
     with_them do
@@ -30,8 +30,8 @@ RSpec.describe DeepCompactor do
     using RSpec::Parameterized::TableSyntax
 
     where(:source, :compacted, :result) do
-      ["a", nil, [], ["aa", "bb", nil, []]] | ["a", [], ["aa", "bb", []]] | ref(:compacted)
-      ["a", "b", [], %w[aa bb cc dd]]       | ref(:source)                | nil
+      ["a", nil, [], ["aa", nil, []]] | ["a", [], ["aa", []]] | ref(:compacted)
+      ["a", "b", [], %w[aa bb cc]]    | ref(:source)          | nil
     end
 
     with_them do
@@ -52,8 +52,8 @@ RSpec.describe DeepCompactor do
     using RSpec::Parameterized::TableSyntax
 
     where(:source, :compacted) do
-      ["a", nil, [], ["aa", "bb", nil, []]] | ["a", %w[aa bb]]
-      ["a", "b", "c", %w[aa bb cc dd]]      | ref(:source)
+      ["a", nil, [], ["aa", nil, []]] | ["a", %w[aa]]
+      ["a", "b", "c", %w[aa bb cc]]   | ref(:source)
     end
 
     with_them do
@@ -68,8 +68,8 @@ RSpec.describe DeepCompactor do
     using RSpec::Parameterized::TableSyntax
 
     where(:source, :compacted) do
-      { a: "1", b: nil, c: {}, d: { aa: "11", bb: "22", cc: nil, dd: {} } }   | { a: "1", c: {}, d: { aa: "11", bb: "22", dd: {} } }
-      { a: "1", b: "2", c: {}, d: { aa: "11", bb: "22", cc: "33", dd: {} } }  | ref(:source)
+      { a: "1", b: nil, c: {}, d: { aa: "11", bb: nil, cc: {} } }   | { a: "1", c: {}, d: { aa: "11", cc: {} } }
+      { a: "1", b: "2", c: {}, d: { aa: "11", bb: "22", cc: {} } }  | ref(:source)
     end
 
     with_them do
@@ -84,8 +84,8 @@ RSpec.describe DeepCompactor do
     using RSpec::Parameterized::TableSyntax
 
     where(:source, :compacted) do
-      { a: "1", b: nil, c: {}, d: { aa: "11", bb: "22", cc: nil, dd: {} } }                         | { a: "1", d: { aa: "11", bb: "22" } }
-      { a: "1", b: "2", c: { aa: "11" }, d: { aa: "11", bb: "22", cc: "33", dd: { aaa: "111" } } }  | ref(:source)
+      { a: "1", b: nil, c: {}, d: { aa: "11", bb: nil, cc: {} } }                         | { a: "1", d: { aa: "11" } }
+      { a: "1", b: "2", c: { aa: "11" }, d: { aa: "11", bb: "22", cc: { aaa: "111" } } }  | ref(:source)
     end
 
     with_them do
