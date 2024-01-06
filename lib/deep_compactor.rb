@@ -77,6 +77,7 @@ module DeepCompactor
       end
     end
 
+    # @return [Hash]
     def deep_compact_blank
       to_h do |key, value|
         if value.is_a?(Array) || value.is_a?(Hash)
@@ -85,6 +86,17 @@ module DeepCompactor
           [key, value]
         end
       end.compact
+    end
+
+    # @return [self, nil]
+    def deep_compact_blank!
+      compacted = deep_compact_blank
+
+      if self == compacted
+        nil
+      else
+        replace(compacted)
+      end
     end
   end
 end

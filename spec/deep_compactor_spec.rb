@@ -136,4 +136,26 @@ RSpec.describe DeepCompactor do
       it { should eq compacted }
     end
   end
+
+  describe "Hash#deep_compact_blank!" do
+    subject { source.deep_compact_blank! }
+
+    using DeepCompactor
+    using RSpec::Parameterized::TableSyntax
+
+    where(:source, :compacted, :result) do
+      { a: "1", b: nil, c: {}, d: { aa: "11", bb: nil, cc: {} } }                         | { a: "1", d: { aa: "11" } } | ref(:compacted)
+      { a: "1", b: "2", c: { aa: "11" }, d: { aa: "11", bb: "22", cc: { aaa: "111" } } }  | ref(:source)                | nil
+    end
+
+    with_them do
+      it "source be compacted" do
+        subject
+        expect(source).to eq compacted
+      end
+      it "should be result" do
+        expect(subject).to eq result
+      end
+    end
+  end
 end
