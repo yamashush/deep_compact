@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "deep_compactor"
+require "rspec-parameterized"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
