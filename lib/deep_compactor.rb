@@ -18,7 +18,7 @@ module DeepCompactor
     end
 
     # @return [self, nil]
-    # @see https://docs.ruby-lang.org/en/master/Array.html#method-i-compact
+    # @see https://docs.ruby-lang.org/en/master/Array.html#method-i-compact-21
     def deep_compact!
       compacted = deep_compact
 
@@ -53,6 +53,8 @@ module DeepCompactor
   end
 
   refine Hash do
+    # @return [Hash]
+    # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-compact
     def deep_compact
       to_h do |key, value|
         if value.is_a?(Array) || value.is_a?(Hash)
@@ -61,6 +63,18 @@ module DeepCompactor
           [key, value]
         end
       end.compact
+    end
+
+    # @return [self, nil]
+    # @see https://docs.ruby-lang.org/en/master/Hash.html#method-i-compact-21
+    def deep_compact!
+      compacted = deep_compact
+
+      if self == compacted
+        nil
+      else
+        replace(compacted)
+      end
     end
 
     def deep_compact_blank
