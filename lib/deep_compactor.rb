@@ -15,6 +15,16 @@ module DeepCompactor
       end.compact
     end
 
+    def deep_compact!
+      map! do |value|
+        if value.is_a?(Array) || value.is_a?(Hash)
+          value.deep_compact
+        else
+          value
+        end
+      end.compact!
+    end
+
     def deep_compact_blank
       map do |value|
         if value.is_a?(Array) || value.is_a?(Hash)

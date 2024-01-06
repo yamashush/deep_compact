@@ -23,6 +23,28 @@ RSpec.describe DeepCompactor do
     end
   end
 
+  describe "Array#deep_compact!" do
+    subject { source.deep_compact! }
+
+    using DeepCompactor
+    using RSpec::Parameterized::TableSyntax
+
+    where(:source, :compacted, :result) do
+      ["a", nil, [], ["aa", "bb", nil, []]] | ["a", [], ["aa", "bb", []]] | ref(:compacted)
+      ["a", "b", [], %w[aa bb cc dd]]       | ref(:source)                | nil
+    end
+
+    with_them do
+      it "source be compacted" do
+        subject
+        expect(source).to eq compacted
+      end
+      it "should be result" do
+        expect(subject).to eq result
+      end
+    end
+  end
+
   describe "Array#deep_compact_blank" do
     subject { source.deep_compact_blank }
 
