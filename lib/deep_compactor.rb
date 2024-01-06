@@ -34,6 +34,16 @@ module DeepCompactor
         end
       end.compact
     end
+
+    def deep_compact_blank!
+      map! do |value|
+        if value.is_a?(Array) || value.is_a?(Hash)
+          value.empty? ? nil : value.deep_compact_blank
+        else
+          value
+        end
+      end.compact!
+    end
   end
 
   refine Hash do
