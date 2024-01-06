@@ -2,6 +2,7 @@
 
 RSpec.describe DeepCompactor do
   using described_class
+  using RSpec::Parameterized::TableSyntax
 
   it "has a version number" do
     expect(DeepCompactor::VERSION).not_to be nil
@@ -9,9 +10,6 @@ RSpec.describe DeepCompactor do
 
   describe "Array#deep_compact" do
     subject { source.deep_compact }
-
-    using DeepCompactor
-    using RSpec::Parameterized::TableSyntax
 
     where(:source, :compacted) do
       ["a", nil, [], ["aa", nil, []]] | ["a", [], ["aa", []]]
@@ -25,9 +23,6 @@ RSpec.describe DeepCompactor do
 
   describe "Array#deep_compact!" do
     subject { source.deep_compact! }
-
-    using DeepCompactor
-    using RSpec::Parameterized::TableSyntax
 
     where(:source, :compacted, :result) do
       ["a", nil, [], ["aa", nil, []]] | ["a", [], ["aa", []]] | ref(:compacted)
@@ -48,9 +43,6 @@ RSpec.describe DeepCompactor do
   describe "Array#deep_compact_blank" do
     subject { source.deep_compact_blank }
 
-    using DeepCompactor
-    using RSpec::Parameterized::TableSyntax
-
     where(:source, :compacted) do
       ["a", nil, [], ["aa", nil, []]] | ["a", %w[aa]]
       ["a", "b", "c", %w[aa bb cc]]   | ref(:source)
@@ -63,9 +55,6 @@ RSpec.describe DeepCompactor do
 
   describe "Array#deep_compact_blank!" do
     subject { source.deep_compact_blank! }
-
-    using DeepCompactor
-    using RSpec::Parameterized::TableSyntax
 
     where(:source, :compacted, :result) do
       ["a", nil, [], ["aa", nil, []]] | ["a", %w[aa]] | ref(:compacted)
@@ -86,9 +75,6 @@ RSpec.describe DeepCompactor do
   describe "Hash#deep_compact" do
     subject { source.deep_compact }
 
-    using DeepCompactor
-    using RSpec::Parameterized::TableSyntax
-
     where(:source, :compacted) do
       { a: 1, b: nil, c: {}, d: { aa: 11, bb: nil, cc: {} } } | { a: 1, c: {}, d: { aa: 11, cc: {} } }
       { a: 1, b: 2, c: {}, d: { aa: 11, bb: 22, cc: {} } }    | ref(:source)
@@ -101,9 +87,6 @@ RSpec.describe DeepCompactor do
 
   describe "Hash#deep_compact!" do
     subject { source.deep_compact! }
-
-    using DeepCompactor
-    using RSpec::Parameterized::TableSyntax
 
     where(:source, :compacted, :result) do
       { a: 1, b: nil, c: {}, d: { aa: 11, bb: nil, cc: {} } } | { a: 1, c: {}, d: { aa: 11, cc: {} } } | ref(:compacted)
@@ -124,9 +107,6 @@ RSpec.describe DeepCompactor do
   describe "Hash#deep_compact_blank" do
     subject { source.deep_compact_blank }
 
-    using DeepCompactor
-    using RSpec::Parameterized::TableSyntax
-
     where(:source, :compacted) do
       { a: 1, b: nil, c: {}, d: { aa: 11, bb: nil, cc: {} } }                 | { a: 1, d: { aa: 11 } }
       { a: 1, b: 2, c: { aa: 11 }, d: { aa: 11, bb: 22, cc: { aaa: 111 } } }  | ref(:source)
@@ -139,9 +119,6 @@ RSpec.describe DeepCompactor do
 
   describe "Hash#deep_compact_blank!" do
     subject { source.deep_compact_blank! }
-
-    using DeepCompactor
-    using RSpec::Parameterized::TableSyntax
 
     where(:source, :compacted, :result) do
       { a: 1, b: nil, c: {}, d: { aa: 11, bb: nil, cc: {} } }                | { a: 1, d: { aa: 11 } } | ref(:compacted)
